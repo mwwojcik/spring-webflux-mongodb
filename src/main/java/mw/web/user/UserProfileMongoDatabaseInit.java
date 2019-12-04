@@ -12,7 +12,7 @@ public class UserProfileMongoDatabaseInit implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        MongoOperations mongoOps = new MongoTemplate(MongoClients.create(), "myfirstbase");
+        MongoOperations mongoOps = new MongoTemplate(MongoClients.create("mongodb://10.22.33.78:27017"), "myfirstbase");
 
         mongoOps.dropCollection("profile");
 
