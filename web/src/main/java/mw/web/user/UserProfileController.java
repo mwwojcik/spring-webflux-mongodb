@@ -11,7 +11,7 @@ import java.net.URI;
 @RequestMapping("/api/profiles")
 public class UserProfileController {
 
-    private UserProfileRepository userProfileRepository;
+    private mw.web.user.UserProfileRepository userProfileRepository;
 
     public UserProfileController(UserProfileRepository userProfileRepository) {
         this.userProfileRepository = userProfileRepository;
