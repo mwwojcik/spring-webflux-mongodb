@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/profiles")
@@ -18,8 +19,8 @@ public class UserProfileController {
     }
 
     @GetMapping
-    public String findAllProfiles() {
-        return "";
+    public List<UserProfileEntry> findAllProfiles() {
+        return userProfileRepository.findAll();
     }
 
     @GetMapping("/{id}")
