@@ -12,7 +12,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.time.Duration;
 
 @SpringBootTest
-@AutoConfigureWebTestClient(timeout = "10000")
+@AutoConfigureWebTestClient
 class ReactiveHelloControllerTest {
 
     private final String s = "/api/hello";
