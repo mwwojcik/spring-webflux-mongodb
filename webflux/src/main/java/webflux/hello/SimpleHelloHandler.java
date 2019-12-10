@@ -14,7 +14,7 @@ public class SimpleHelloHandler {
 
     public Mono<ServerResponse> hello(ServerRequest request) {
         return ServerResponse.ok()
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.TEXT_EVENT_STREAM)
                 .body(bodyInserter());
     }
 
