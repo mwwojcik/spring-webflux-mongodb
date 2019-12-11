@@ -2,6 +2,7 @@ package mw.web.user;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -21,8 +22,8 @@ public class UserProfileMongoConfiguration {
     }
 
     public @Bean
-    MongoDbFactory mongoDbFactory() {
-        return new SimpleMongoClientDbFactory( mongoClient(), "test");
+    MongoDbFactory mongoDbFactory(@Autowired MongoClient client) {
+        return new SimpleMongoClientDbFactory( client, "test");
     }
 }
 
