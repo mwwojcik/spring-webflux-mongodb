@@ -11,24 +11,14 @@ import org.springframework.data.mongodb.core.SimpleReactiveMongoDatabaseFactory;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 @Configuration
-@EnableReactiveMongoRepositories
 public class BookMongoDatabaseConfiguration {
 
-    /*
-     * Use the Reactive Streams Mongo Client API to create a com.mongodb.reactivestreams.client.MongoClient instance.
-     */
-   /* public @Bean MongoClient reactiveMongoClient()  {
-        return MongoClients.create("mongodb://root:root@10.22.33.78:27017");
-    }*/
 
-
-  /*  public @Bean
-    ReactiveMongoDatabaseFactory reactiveMongoDatabaseFactory() {
-        return new SimpleReactiveMongoDatabaseFactory(MongoClients.create("mongodb://root:root@10.22.33.78:27017"), "database");
+    public @Bean MongoClient reactiveMongoClient()  {
+        return MongoClients.create("mongodb://10.22.33.78:27017/books");
     }
-
-    public @Bean ReactiveMongoTemplate reactiveMongoTemplate() {
-        return new ReactiveMongoTemplate(reactiveMongoDatabaseFactory());
+/*
+    public @Bean ReactiveMongoDatabaseFactory reactiveMongoDatabaseFactory() {
+        return new SimpleReactiveMongoDatabaseFactory(MongoClients.create("mongodb://10.22.33.78:27017/books"), "books");
     }*/
-
 }
