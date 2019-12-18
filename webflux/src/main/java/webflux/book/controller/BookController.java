@@ -3,6 +3,7 @@ package webflux.book.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import webflux.book.model.Book;
 import webflux.book.mongo.BookReactiveRepo;
@@ -16,9 +17,10 @@ public class BookController {
         repository = repo;
     }
 
-    @PostMapping(value = "/book")
+
+ /*   @PostMapping(value = "/book")
     public Mono<Book> createBook(@RequestBody Book book) {
         return repository.save(book);
     }
-
+*/
 }
