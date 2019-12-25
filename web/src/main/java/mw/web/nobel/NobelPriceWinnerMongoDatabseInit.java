@@ -1,7 +1,5 @@
-package mw.web.user;
+package mw.web.nobel;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Profile("remote")
-public class UserProfileMongoDatabaseInit implements ApplicationRunner {
+public class NobelPriceWinnerMongoDatabseInit implements ApplicationRunner {
 
     @Autowired
     private MongoDbFactory factory ;
@@ -21,7 +19,7 @@ public class UserProfileMongoDatabaseInit implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         MongoOperations mongoOps = new MongoTemplate(factory);
-        mongoOps.dropCollection("profile");
-        mongoOps.createCollection("profile");
+        mongoOps.dropCollection("nobel");
+        mongoOps.createCollection("nobel");
     }
 }
