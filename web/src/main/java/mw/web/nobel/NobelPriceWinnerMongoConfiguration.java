@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
 import org.springframework.data.mongodb.core.SimpleMongoClientDbFactory;
 
 @Configuration
@@ -18,7 +20,7 @@ public class NobelPriceWinnerMongoConfiguration {
 
     @Profile("remote")
     public @Bean
-    MongoDbFactory mongoDbFactory(@Autowired MongoClient client) {
-        return new SimpleMongoClientDbFactory( client, "nobel");
+    MongoDatabaseFactory mongoDbFactory(@Autowired MongoClient client) {
+        return new SimpleMongoClientDatabaseFactory(client, "nobel");
     }
 }

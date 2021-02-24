@@ -16,6 +16,6 @@ public class BookMongoDatabaseConfiguration {
 
     @Profile("remote")
     public @Bean MongoClient reactiveMongoClient()  {
-        return MongoClients.create("mongodb://10.22.33.78:27017/books");
+        return MongoClients.create("mongodb://192.168.1.201:27017/books");
     }
 }
