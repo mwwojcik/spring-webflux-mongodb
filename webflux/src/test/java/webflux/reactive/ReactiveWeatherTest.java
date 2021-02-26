@@ -11,10 +11,13 @@ import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 import reactor.test.StepVerifier;
 
+/**
+ * https://stackoverflow.com/questions/12581072/intellij-thread-debug
+ */
 @Slf4j
 public class ReactiveWeatherTest {
 
-    private static final int SLEEP_TIME_MILLIS = 3000;
+    private static final int SLEEP_TIME_MILLIS = 1000;
 
     @DisplayName("Should fetch the Weather in the reactive way.")
     @Test
@@ -57,18 +60,13 @@ public class ReactiveWeatherTest {
         var weather = Weather.rxFetch("Warsaw");
         var info = TouristInfo.rxFetch("Warsaw");
 
-        //**** Version 1 - in this version operations run in parallel threads ***
-       /*
-        weather.subscribeOn(s).subscribe();
-        info.subscribeOn(s).subscribe();*/
+        weather=weather.subscribeOn(s);
+        info=info.subscribeOn(s);
 
-        //Version 2 - both runs in the same main thread - WHY ???? ***
-       /* weather.subscribeOn(s);
-        info.subscribeOn(s);
-
-        weather.subscribe();
-        info.subscribe();*/
-
+        weather.subscribe((Weather w)->print(w));
+        info.subscribe();
+        System.out.println("Let's wait for child threads to finish");
+        Sleeper.sleep(Duration.ofMillis(1000));
     }
 
     public void print(Weather weather) {
