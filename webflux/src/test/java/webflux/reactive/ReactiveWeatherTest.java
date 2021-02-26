@@ -1,14 +1,11 @@
 package webflux.reactive;
 
 import java.time.Duration;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
@@ -42,7 +39,7 @@ public class ReactiveWeatherTest {
         var warsaw = Weather.rxFetch("Warsaw");
         var radom = Weather.rxFetch("Radom");
 
-        var weathers=warsaw.mergeWith(radom);
+        var weathers = warsaw.mergeWith(radom);
 
         weathers.doOnNext(this::print).subscribe();
         //two SYNC (not async!) operations returns  2 objects
@@ -51,28 +48,26 @@ public class ReactiveWeatherTest {
         //warsaw.subscribe();
         //this line is reachead after finish warsaw stream!
     }
-    
+
     @DisplayName("Should process data on cities in concurrent way ")
-    @Test 
+    @Test
     void shouldProcessDataOnCitiesIConcurrentWay() {
         Scheduler s = Schedulers.newParallel("parallel-scheduler", 4);
-
 
         var weather = Weather.rxFetch("Warsaw");
         var info = TouristInfo.rxFetch("Warsaw");
 
-        weather.subscribeOn(s).doOnNext(v-> log.info(Thread.currentThread().getName())).doOnSubscribe(v-> log.info(Thread.currentThread().getName()));
-        info.subscribeOn(s).doOnNext(v-> log.info(Thread.currentThread().getName())).doOnSubscribe(v-> log.info(Thread.currentThread().getName()));
-        weather.subscribe((v)->log.info(Thread.currentThread().getName()));
-        info.subscribe((v)->log.info(Thread.currentThread().getName()));
+        //**** Version 1 - in this version operations run in parallel threads ***
+       /*
+        weather.subscribeOn(s).subscribe();
+        info.subscribeOn(s).subscribe();*/
 
-      final Flux<String> flux = Flux
-            .range(1, 2)
-            .map(i -> 10 + i)
-            .subscribeOn(s)
-            .map(i -> "value " + i);
+        //Version 2 - both runs in the same main thread - WHY ???? ***
+       /* weather.subscribeOn(s);
+        info.subscribeOn(s);
 
-        flux.subscribe((v)->System.out.println(Thread.currentThread().getName()));
+        weather.subscribe();
+        info.subscribe();*/
 
     }
 
@@ -96,13 +91,13 @@ public class ReactiveWeatherTest {
         public static Mono<Weather> rxFetch(String city) {
             return Mono.fromSupplier(() -> fetch(city));
         }
-
     }
 
     @Slf4j
     @AllArgsConstructor
     @Getter
-    static class TouristInfo{
+    static class TouristInfo {
+
         private String country;
 
         public static TouristInfo fetch(String city) {
@@ -111,7 +106,7 @@ public class ReactiveWeatherTest {
             return new TouristInfo("Poland");
         }
 
-        public static Mono<TouristInfo> rxFetch(String city){
+        public static Mono<TouristInfo> rxFetch(String city) {
             return Mono.fromSupplier(() -> fetch(city));
         }
     }
