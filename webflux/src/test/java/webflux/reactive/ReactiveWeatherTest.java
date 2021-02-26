@@ -2,6 +2,7 @@ package webflux.reactive;
 
 import java.time.Duration;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -63,14 +64,18 @@ public class ReactiveWeatherTest {
         weather=weather.subscribeOn(s);
         info=info.subscribeOn(s);
 
-        weather.subscribe((Weather w)->print(w));
-        info.subscribe();
+        weather.zipWith(info,(Weather w,TouristInfo t)->new CityInfo(w,t)).subscribe((CityInfo c)->print(c));
+
         System.out.println("Let's wait for child threads to finish");
         Sleeper.sleep(Duration.ofMillis(1000));
     }
 
     public void print(Weather weather) {
         log.info(String.format("Got: %s", weather.kind));
+    }
+
+    public void print(CityInfo cityInfo) {
+        log.info(String.format("Got wether: %s in the country %s", cityInfo.getWeather().getKind(),cityInfo.getInfo().getCountry()));
     }
 
     @Slf4j
@@ -107,6 +112,14 @@ public class ReactiveWeatherTest {
         public static Mono<TouristInfo> rxFetch(String city) {
             return Mono.fromSupplier(() -> fetch(city));
         }
+    }
+
+    @Getter
+    @Builder
+   static class CityInfo{
+        private Weather weather;
+        private TouristInfo info;
+
     }
 }
 
