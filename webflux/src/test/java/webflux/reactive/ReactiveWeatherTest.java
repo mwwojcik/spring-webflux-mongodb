@@ -34,7 +34,7 @@ public class ReactiveWeatherTest {
 
         //Weather.rxRetch("Radom").timeout(Duration.ofMillis(500)).subscribe();
         StepVerifier.create(Weather.rxFetch("Radom").timeout(Duration.ofMillis(500))).expectError().verify();
-        StepVerifier.create(Weather.rxFetch("Radom").timeout(Duration.ofMillis(1000))).expectNextCount(1).verifyComplete();
+        StepVerifier.create(Weather.rxFetch("Radom").timeout(Duration.ofMillis(2000))).expectNextCount(1).verifyComplete();
     }
 
     @DisplayName("Should display weathers from different cities")
