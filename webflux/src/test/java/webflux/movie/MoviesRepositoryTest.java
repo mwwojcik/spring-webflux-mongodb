@@ -5,9 +5,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import webflux.app.ReactiveConfiguration;
+import webflux.app.MongoBlockingConfiguration;
+import webflux.app.MongoReactiveConfiguration;
 
-@SpringBootTest(classes = {ReactiveConfiguration.class})
+@SpringBootTest(classes = {MongoBlockingConfiguration.class})
 class MoviesRepositoryTest {
 
     @Autowired

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({ReactiveConfiguration.class})
+@Import({MongoBlockingConfiguration.class,MongoReactiveConfiguration.class})
 public class ReactiveHelloSpringApplication {
     public static void main(String[] args) {
             SpringApplication.run(ReactiveHelloSpringApplication.class, args);
